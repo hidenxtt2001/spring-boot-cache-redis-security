@@ -1,4 +1,4 @@
-package com.nxhung.redisjwt.controllers;
+package com.nxhung.redisjwt.controllers.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,6 +22,7 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 
 @Configuration
 @RequiredArgsConstructor
+@EnableMethodSecurity(securedEnabled = true,jsr250Enabled = true)
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -51,11 +53,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(matcherRegistry -> {
                     matcherRegistry
                             .requestMatchers(antMatcher("/auth/**")).permitAll()
-//                            .requestMatchers(antMatcher("/auth/logout")).authenticated()
+                            .requestMatchers(antMatcher("/auth/logout")).authenticated()
                             .anyRequest().authenticated();
                 })
                 .httpBasic(http -> {
-
                 }).sessionManagement(configure -> configure.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
         return httpSecurity.build();
     }

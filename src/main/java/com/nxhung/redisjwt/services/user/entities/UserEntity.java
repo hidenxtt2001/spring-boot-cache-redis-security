@@ -31,7 +31,7 @@ public class UserEntity {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(cascade = {CascadeType.MERGE,})
+    @ManyToMany(cascade = {CascadeType.MERGE,}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = {@JoinColumn(name = "userId")},

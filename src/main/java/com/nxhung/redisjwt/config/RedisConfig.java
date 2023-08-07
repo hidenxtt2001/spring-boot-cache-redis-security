@@ -1,5 +1,6 @@
 package com.nxhung.redisjwt.config;
 
+import com.nxhung.redisjwt.constants.RedisConstant;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -21,13 +22,13 @@ public class RedisConfig {
 
     @Bean
     public JedisConnectionFactory connectionFactory() {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(System.getenv("REDIS_HOST_URL"), Integer.parseInt(System.getenv("REDIS_HOST_PORT")));
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(System.getenv(RedisConstant.REDIS_HOST_URL), Integer.parseInt(System.getenv(RedisConstant.REDIS_HOST_PORT)));
         return new JedisConnectionFactory(redisStandaloneConfiguration);
     }
 
     @Bean
-    public RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<?, ?> template = new RedisTemplate<>();
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
         return template;
     }

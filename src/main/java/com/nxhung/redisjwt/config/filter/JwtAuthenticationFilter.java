@@ -22,9 +22,9 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private final RedisTemplate<String, ?> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
     private final JwtService jwtService;
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
 
     @Override
@@ -35,7 +35,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 throw new BadCredentialsException("Token is not valid");
             }
             String jwtToken = header.substring(7).trim();
+            if (Boolean.FALSE.equals(redisTemplate.hasKey(jwtToken))) {
+                throw new BadCredentialsException("Token is not valid");
+            }
             var username = jwtService.extractUsername(jwtToken);
+
             var user = userDetailsService.loadUserByUsername(username);
             if (user == null) {
                 throw new BadCredentialsException("Token is not valid");

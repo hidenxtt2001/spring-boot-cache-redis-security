@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:h2:mem:testdb
     username: sa
-    password:
+    password: 123456
     driver-class-name: org.h2.Driver
   jpa:
     show-sql: true
@@ -11,4 +11,7 @@ spring:
     type: REDIS
     redis:
       time-to-live: 60000
+  output:
+    ansi:
+      enabled: ALWAYS
 

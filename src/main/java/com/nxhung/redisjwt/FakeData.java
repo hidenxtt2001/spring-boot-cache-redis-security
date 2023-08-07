@@ -24,8 +24,8 @@ public class FakeData {
     CommandLineRunner runner() {
         return args -> {
             // Init Roles
-            RoleEntity roleAdmin = RoleEntity.builder().name("ADMIN").build();
-            RoleEntity roleUser = RoleEntity.builder().name("USER").build();
+            RoleEntity roleAdmin = RoleEntity.builder().name("ROLE_ADMIN").build();
+            RoleEntity roleUser = RoleEntity.builder().name("ROLE_USER").build();
             roleRepository.saveAll(List.of(roleAdmin, roleUser));
 
             // Init User
