@@ -8,6 +8,8 @@ import com.nxhung.redisjwt.services.auth.dtos.LogoutRequest;
 import com.nxhung.redisjwt.services.auth.dtos.SessionResponse;
 import com.nxhung.redisjwt.services.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,18 +28,21 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
+    Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
     private final AuthService authService;
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.CREATED)
     public SessionResponse login(@RequestBody LoginRequest loginRequest) {
+        logger.info("Login Call");
         return authService.login(loginRequest);
     }
 
     @PostMapping("/logout")
     @ResponseStatus(HttpStatus.OK)
     public void logout(@RequestBody LogoutRequest logoutRequest) {
+        logger.info("Logout Call");
         authService.logout(logoutRequest);
     }
 
